@@ -1,6 +1,7 @@
 'use strict';
 
 import {
+  getTrends,
   getPopular,
   getTop
 } from './services.js';
@@ -18,11 +19,25 @@ const menuLink = () => {
         event.preventDefault();
         filmWeek.style.display = 'none';
         title.textContent = target.textContent;
+        //Популярные фильмы
         if (target.classList.contains('get-nav__link_popular-movies')) {
           getPopular('movie').then(data => renderCard(data.results));
         }
+        //Топ сериалов
         if (target.classList.contains('get-nav__link_top-tv')) {
           getTop('tv').then(data => renderCard(data.results));
+        }
+        //Фильмы и сериалы в тренде
+        if (target.classList.contains('get-nav__link_trends')) {
+          getTrends('all', 'week').then(data => renderCard(data.results));
+        }
+        //Популярные сериалы
+        if (target.classList.contains('get-nav__link_popular-tv')) {
+          getPopular('tv').then(data => renderCard(data.results));
+        }
+        //Топ фильмов
+        if (target.classList.contains('get-nav__link_top-movies')) {
+          getTop('movie').then(data => renderCard(data.results));
         }
       }
     });
