@@ -18,11 +18,11 @@ const search = () => {
       }).then(() => {
         filmWeek.remove();
         title.textContent = 'Результат поиска';
-      })
-        .catch(err => {
-          filmWeek.remove();
-          title.textContent = err;
-        });
+      }).catch(err => {
+        filmWeek.remove();
+        title.textContent = err;
+      });
+      searchForm.reset();
     }
   });
 };
