@@ -25,3 +25,13 @@ export const getPopular = async (type, page = 1) => {
   const url = `${BASE_URL}${type}/popular?api_key=${API_KEY}${LANGUAGE}&page=${page}`;
   return await getData(url);
 };
+
+export const getVideo = async (id, type) => {
+  const url = `${BASE_URL}${type}/${id}/videos?api_key=${API_KEY}${LANGUAGE}`;
+  return await getData(url);
+};
+
+export const getSearch = async (query, page = 1) => {
+  const url = `${BASE_URL}search/multi?api_key=${API_KEY}${LANGUAGE}&query=${query}&page=${page}&include_adult=false`;
+  return await getData(url);
+};
