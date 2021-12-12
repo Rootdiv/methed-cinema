@@ -8,7 +8,6 @@ const pagination = document.querySelector('.pagination');
 let paginationType = '';
 
 const renderCard = async (data, type) => {
-  console.log('data: ', data);
   paginationType = type;
   listCard.textContent = '';
   pagination.textContent = '';
@@ -41,7 +40,6 @@ const renderCard = async (data, type) => {
     .then(cards => listCard.append(...cards))
     .then(() => {
       if (data.total_pages > 1) {
-
         if (data.page > 1) {
           const buttonLeft = document.createElement('button');
           buttonLeft.className = 'pagination-arrow';
@@ -58,14 +56,15 @@ const renderCard = async (data, type) => {
           pagination.append(buttonRight);
         }
       }
+      const arrowBtn = pagination.querySelectorAll('.pagination-arrow');
+      [...arrowBtn].forEach(item => {
+        item.addEventListener('click', async event => {
+          const data = await getPagination(event.target.dataset.page);
+          renderCard(data, paginationType);
+        });
+      });
     });
 
-  pagination.addEventListener('click', async event => {
-    if (event.target.classList.contains('pagination-arrow')) {
-      const data = await getPagination(event.target.dataset.page);
-      renderCard(data, paginationType);
-    }
-  });
 };
 
 export default renderCard;
