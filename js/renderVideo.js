@@ -5,7 +5,7 @@ import renderCard from './renderCard.js';
 
 const filmWeek = document.querySelector('.film-week');
 
-const firstRender = (data, key) => {
+const firstRender = (data, key = null) => {
   const {
     vote_average: voteAverage,
     backdrop_path: backdropPath,
@@ -30,13 +30,13 @@ const firstRender = (data, key) => {
 };
 
 const renderVideo = async () => {
-  const data = await getTrends('all', 'week', 1);
+  const data = await getTrends('all', 'week');
   const [firstCard, ...otherCard] = data.results;
   otherCard.length = 12;
 
   const video = await getVideo(firstCard.id, firstCard.media_type);
 
-  firstRender(firstCard, video.results[0]);
+  firstRender(firstCard, video.results[0]?.key);
   renderCard(otherCard);
 };
 

@@ -10,7 +10,6 @@ const renderCard = (data, type) => {
   Promise.all(data.map(async item => {
     const mediaType = item.media_type ?? type;
     const video = await getVideo(item.id, mediaType);
-    //eslint-disable-next-line no-unsafe-optional-chaining
     const key = video.results[0]?.key;
     const card = document.createElement('li');
     card.className = 'other-films__item';
