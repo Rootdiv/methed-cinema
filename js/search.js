@@ -11,7 +11,7 @@ const search = () => {
     if (!searchInput.value.trim() !== '') {
       getSearch(searchInput.value).then(data => {
         if (data.results.length) {
-          renderCard(data.results);
+          renderCard(data, '');
         } else {
           throw 'К сожаления по вашему запросу ничего не найдено';
         }

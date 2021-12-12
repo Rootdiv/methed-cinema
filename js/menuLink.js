@@ -21,23 +21,23 @@ const menuLink = () => {
         title.textContent = target.textContent;
         //Популярные фильмы
         if (target.classList.contains('get-nav__link_popular-movies')) {
-          getPopular('movie').then(data => renderCard(data.results, 'movie'));
+          getPopular('movie').then(data => renderCard(data, 'movie'));
         }
         //Топ сериалов
         if (target.classList.contains('get-nav__link_top-tv')) {
-          getTop('tv').then(data => renderCard(data.results, 'tv'));
+          getTop('tv').then(data => renderCard(data, 'tv'));
         }
         //Фильмы и сериалы в тренде
         if (target.classList.contains('get-nav__link_trends')) {
-          getTrends('all', 'week').then(data => renderCard(data.results));
+          getTrends('all', 'week').then(data => renderCard(data));
         }
         //Популярные сериалы
         if (target.classList.contains('get-nav__link_popular-tv')) {
-          getPopular('tv').then(data => renderCard(data.results, 'tv'));
+          getPopular('tv').then(data => renderCard(data, 'tv'));
         }
         //Топ фильмов
         if (target.classList.contains('get-nav__link_top-movies')) {
-          getTop('movie').then(data => renderCard(data.results, 'movie'));
+          getTop('movie').then(data => renderCard(data, 'movie'));
         }
       }
     });

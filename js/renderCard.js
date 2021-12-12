@@ -1,13 +1,18 @@
 'use strict';
 
-import { getVideo } from './services.js';
+import { getVideo, getPagination } from './services.js';
 
 const listCard = document.querySelector('.other-films__list');
+const pagination = document.querySelector('.pagination');
 
-const renderCard = (data, type) => {
+let paginationType = '';
+
+const renderCard = async (data, type) => {
+  console.log('data: ', data);
+  paginationType = type;
   listCard.textContent = '';
-
-  Promise.all(data.map(async item => {
+  pagination.textContent = '';
+  Promise.all(data.results.map(async item => {
     const mediaType = item.media_type ?? type;
     const video = await getVideo(item.id, mediaType);
     const key = video.results[0]?.key;
@@ -32,7 +37,35 @@ const renderCard = (data, type) => {
     link.append(img);
     card.append(link);
     return card;
-  })).then(cards => listCard.append(...cards));
+  }))
+    .then(cards => listCard.append(...cards))
+    .then(() => {
+      if (data.total_pages > 1) {
+
+        if (data.page > 1) {
+          const buttonLeft = document.createElement('button');
+          buttonLeft.className = 'pagination-arrow';
+          buttonLeft.dataset.page = data.page - 1;
+          buttonLeft.textContent = '<';
+          pagination.append(buttonLeft);
+        }
+
+        if (data.page < data.total_pages) {
+          const buttonRight = document.createElement('button');
+          buttonRight.className = 'pagination-arrow';
+          buttonRight.dataset.page = data.page + 1;
+          buttonRight.textContent = '>';
+          pagination.append(buttonRight);
+        }
+      }
+    });
+
+  pagination.addEventListener('click', async event => {
+    if (event.target.classList.contains('pagination-arrow')) {
+      const data = await getPagination(event.target.dataset.page);
+      renderCard(data, paginationType);
+    }
+  });
 };
 
 export default renderCard;

@@ -31,13 +31,12 @@ const firstRender = (data, key = null) => {
 
 const renderVideo = async () => {
   const data = await getTrends('all', 'week');
-  const [firstCard, ...otherCard] = data.results;
-  otherCard.length = 12;
+  const [firstCard] = data.results;
 
   const video = await getVideo(firstCard.id, firstCard.media_type);
 
-  firstRender(firstCard, video.results[0]?.key);
-  renderCard(otherCard);
+  firstRender(firstCard, video.results[0]);
+  renderCard(data);
 };
 
 export default renderVideo;
